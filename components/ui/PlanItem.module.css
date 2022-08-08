@@ -12,6 +12,7 @@
 .img {
     height: auto;
     max-width: 100%;
+    width: 100%;
 }
 .text_container{
     width: 70%;

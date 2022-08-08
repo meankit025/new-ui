@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { Select, Card, Button } from "antd";
+import { Button } from "antd";
 import { getAllPlants } from "../plans";
-const { Option } = Select;
+import Card from "../components/ui/Card";
 
 
 const Home = () => {
@@ -37,52 +37,96 @@ const Home = () => {
      } else {
        if (filteredResults != "") {
          const filteredData = filteredResults.filter((item) => {
+          console.log(
+            Object.values(item.diseases).includes(target),
+            target
+            // setSearchInput(target)
+          )
            return Object.values(item.diseases).includes(target);
          });
          setFilteredResults(filteredData);
        } else {
          const filteredData = APIData.filter((item) => {
+          console.log(
+          Object.values(item.diseases).includes(target),
+          target
+        )
            return Object.values(item.diseases).includes(target);
          });
          setFilteredResults(filteredData);
        }
      }
    };
+   const handleCatChange = (target) => {
+    setLoading(false);
+    setsearchCat(target);
+    if (target == "All") {
+      setFilteredResults(APIData);
+    } else {
+      if (filteredResults != "") {
+        const filteredData = filteredResults.filter((item) => {
+          console.log(
+            Object.values(item.plan_categories).includes(target),
+            target,
+            setsearchCat(target)
+          )
+          return Object.values(item.plan_categories).includes(target);
+        });
+        setFilteredResults(filteredData);
+      } else {
+        const filteredData = APIData.filter((item) => {
+          console.log(
+            Object.values(item.plan_categories).includes(target),
+            target,
+            setsearchCat(target)
+          )
+          return Object.values(item.plan_categories).includes(target);
+        });
+        setFilteredResults(filteredData);
+      }
+    }
+  };
 
   return (
     <>
-      <Select
+    <div className="select-container">
+      <select
         defaultValue="All"
         style={{
-          width: 120,
+          width: 180,
+          color:"black",
+          margin: "0 10px 0 0"
         }}
-        onChange={handleChange}
+        onChange={(e)=>handleChange(e.target.value)}
       >
-        <Option value="All">All</Option>
+        <option value="All">All</option>
         {diseaseList.map((option) => (
-          <option key={option} value={option}>
+          <option key={option.id} value={option}>
             {option}
           </option>
         ))}
-      </Select>
-      <Select
+      </select>
+      <select
         defaultValue="All"
         style={{
-          width: 120,
+          width: 180,
+          color:"black",
+          margin: "0 10px 0 0"
         }}
-        onChange={handleChange}
+        onChange={(e)=>handleCatChange(e.target.value)}
       >
-        <Option value="All">All</Option>
+        <option value="All">All</option>
         {categoryList.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
         ))}
-      </Select>
+      </select>
       <Button onClick={clearFilter} type="primary">
         Clear Filter
       </Button>
-
+    </div>
+    <div className="cards">
       {loading ? (
         <Card lists={APIData} />
       ) : searchInput !== "All" ? (
@@ -90,7 +134,7 @@ const Home = () => {
           <Card lists={filteredResults} />
         ) : (
           <p>
-            No Data available for <b>Category-{searchCat}</b> and{" "}
+            No Data available for <b>Category-{searchCat}</b> and
             <b>Disease-{searchInput}</b> selected filters. <br></br>Please clear
             the filter and select a new option
           </p>
@@ -98,6 +142,7 @@ const Home = () => {
       ) : (
         <Card lists={APIData} />
       )}
+    </div>
     </>
   );
 }

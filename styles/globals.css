@@ -48,3 +48,11 @@
   margin: 0;
 }
 .ant-card { margin-bottom: 30px; }
+
+.select-container{
+  display: flex;
+justify-content: center;
+}
+.cards{
+  margin-top: 20px;
+}

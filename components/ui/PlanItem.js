@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Slider } from "antd";
+import { Col, Row} from "antd";
 import classes from "./PlanItem.module.css";
 import { Divider, Tag } from "antd";
 
@@ -16,11 +16,12 @@ const Planning = (props) => {
 
   // <Tag color="magenta">magenta</Tag>
   return (
-    <Row className="text-center">
-      <Col span={12}>
+    <Row>
+      <Col span={8}>
         <img className={classes.img} src={productImg} alt={name} />
       </Col>
-      <Col span={12}>
+      <Col span={2}></Col>
+      <Col span={14}>
         <Tag color="magenta">
           <h2>{name}</h2>
         </Tag>
